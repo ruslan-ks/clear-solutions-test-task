@@ -1,6 +1,6 @@
 package com.rkostiuk.cstask.repository;
 
-import com.rkostiuk.cstask.dto.UserWithAddressResponse;
+import com.rkostiuk.cstask.dto.UserAddressResponse;
 import com.rkostiuk.cstask.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,9 +14,9 @@ import java.time.LocalDate;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("""
-            SELECT NEW com.rkostiuk.cstask.dto.UserWithAddressResponse(u, ua)
-            FROM UserAddress ua
-            RIGHT JOIN ua.user u
+            SELECT NEW com.rkostiuk.cstask.dto.UserAddressResponse(u, a)
+            FROM Address a
+            RIGHT JOIN a.user u
     """)
-    Page<UserWithAddressResponse> findByBirthDateBetween(LocalDate from, LocalDate to, Pageable pageable);
+    Page<UserAddressResponse> findByBirthDateBetween(LocalDate from, LocalDate to, Pageable pageable);
 }

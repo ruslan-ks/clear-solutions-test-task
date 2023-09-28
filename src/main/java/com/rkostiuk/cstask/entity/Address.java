@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user_addresses")
-public class UserAddress implements ValidUserAddress {
+@Table(name = "addresses")
+public class Address implements ValidUserAddress {
 
     @Id
     private Long id;
@@ -29,7 +29,7 @@ public class UserAddress implements ValidUserAddress {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserAddress address)) {
+        if (!(o instanceof Address address)) {
             return false;
         }
         return id != null && Objects.equals(id, address.id);
