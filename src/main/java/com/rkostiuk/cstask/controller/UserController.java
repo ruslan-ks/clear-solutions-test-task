@@ -5,10 +5,7 @@ import com.rkostiuk.cstask.dto.UserAddressResponse;
 import com.rkostiuk.cstask.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/users")
 @RestController
@@ -22,5 +19,11 @@ public class UserController {
     @GetMapping
     public Page<UserAddressResponse> search(@RequestBody UserSearchRequest searchRequest, Pageable pageable) {
         return userService.findUsersWithBirthDateBetween(searchRequest, pageable);
+    }
+
+
+    @DeleteMapping("/{userId}")
+    public void delete(@PathVariable long userId) {
+        userService.deleteUserById(userId);
     }
 }
