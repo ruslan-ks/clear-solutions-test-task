@@ -14,9 +14,9 @@ import java.time.LocalDate;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("""
-            SELECT NEW com.rkostiuk.cstask.dto.UserAddressResponse(u, a)
-            FROM Address a
-            RIGHT JOIN a.user u
+            select new com.rkostiuk.cstask.dto.UserAddressResponse(u, a)
+            from Address a
+            right join a.user u
     """)
     Page<UserAddressResponse> findByBirthDateBetween(LocalDate from, LocalDate to, Pageable pageable);
 }

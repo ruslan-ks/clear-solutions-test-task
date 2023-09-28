@@ -1,5 +1,7 @@
 package com.rkostiuk.cstask.service;
 
+import com.rkostiuk.cstask.PageData;
+import com.rkostiuk.cstask.TestUtils;
 import com.rkostiuk.cstask.dto.UserSearchRequest;
 import com.rkostiuk.cstask.dto.UserAddressResponse;
 import com.rkostiuk.cstask.repository.UserRepository;
@@ -9,9 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,24 +30,19 @@ class DataJpaUserServiceTest {
 
     @Test
     void findUsersWithBirthDateBetween() {
-        int pageSize = 10;
-        Pageable pageable = PageRequest.of(0, pageSize);
-        Page<UserAddressResponse> expectedPage = createPage(pageable, createUserAddressResponses(pageSize));
-        var request = new UserSearchRequest(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1));
-        when(userRepository.findByBirthDateBetween(request.fromIncluding(), request.toExcluding(), pageable))
-                .thenReturn(expectedPage);
+        PageData<UserAddressResponse> pageData = TestUtils.createPageData(createUserAddressResponses(10));
+        var req = new UserSearchRequest(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1));
 
-        Page<UserAddressResponse> actualPage = userService.findUsersWithBirthDateBetween(request, pageable);
+        when(userRepository.findByBirthDateBetween(req.fromIncluding(), req.toExcluding(), pageData.pageable()))
+                .thenReturn(pageData.page());
 
-        assertThat(actualPage).isEqualTo(expectedPage);
-        verify(userRepository).findByBirthDateBetween(request.fromIncluding(), request.toExcluding(), pageable);
+        Page<UserAddressResponse> actualPage = userService.findUsersWithBirthDateBetween(req, pageData.pageable());
+
+        assertThat(actualPage).isEqualTo(pageData.page());
+        verify(userRepository).findByBirthDateBetween(req.fromIncluding(), req.toExcluding(), pageData.pageable());
     }
 
     private List<UserAddressResponse> createUserAddressResponses(int size) {
         return userAddressResponses(size, usersWithSequentialId(), addressesWithUserId());
-    }
-
-    private <T> Page<T> createPage(Pageable pageable, List<T> list) {
-        return new PageImpl<>(list, pageable, list.size());
     }
 }
