@@ -1,4 +1,4 @@
-package com.rkostiuk.cstask;
+package com.rkostiuk.cstask.test.util;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,7 +15,7 @@ public class TestUtils {
      * @return PageData containing Pageable and Page
      */
     public static <T> PageData<T> createPageData(int pageNumber, List<T> content) {
-        Pageable pageable = PageRequest.of(0, content.size());
+        Pageable pageable = PageRequest.of(pageNumber, content.size());
         Page<T> page = TestUtils.createPage(pageable, content);
         return new PageData<>(pageable, page);
     }

@@ -1,10 +1,11 @@
 package com.rkostiuk.cstask.service;
 
-import com.rkostiuk.cstask.PageData;
-import com.rkostiuk.cstask.TestUtils;
 import com.rkostiuk.cstask.dto.UserSearchRequest;
 import com.rkostiuk.cstask.dto.UserAddressResponse;
+import com.rkostiuk.cstask.entity.Address;
+import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.repository.UserRepository;
+import com.rkostiuk.cstask.test.util.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,13 +15,15 @@ import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-import static com.rkostiuk.cstask.TestData.*;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class DataJpaUserServiceTest {
+    private final TestDataFactory dataFactory = new SimpleTestDataFactory();
 
     @Mock
     private UserRepository userRepository;
@@ -43,6 +46,8 @@ class DataJpaUserServiceTest {
     }
 
     private List<UserAddressResponse> createUserAddressResponses(int size) {
-        return userAddressResponses(size, usersWithSequentialId(), addressesWithUserId());
+        Supplier<User> userSupplier = UserSuppliers.usersWithSequentialId();
+        Function<User, Address> addressMapper = AddressMappers.addressesWithUserId();
+        return dataFactory.userAddressResponses(size, userSupplier, addressMapper);
     }
 }

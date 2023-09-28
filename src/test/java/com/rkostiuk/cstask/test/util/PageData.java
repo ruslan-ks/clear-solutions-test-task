@@ -1,4 +1,4 @@
-package com.rkostiuk.cstask;
+package com.rkostiuk.cstask.test.util;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
