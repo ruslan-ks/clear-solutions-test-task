@@ -1,13 +1,13 @@
 package com.rkostiuk.cstask.entity;
 
-import com.rkostiuk.cstask.validation.ValidUserAddress;
+import com.rkostiuk.cstask.validation.ValidAddress;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "addresses")
-public class Address implements ValidUserAddress {
+public class Address implements ValidAddress {
 
     @Id
     private Long id;
