@@ -6,6 +6,7 @@ import com.rkostiuk.cstask.dto.request.NewUserRequest;
 import com.rkostiuk.cstask.dto.request.UserSearchRequest;
 import com.rkostiuk.cstask.dto.response.UserAddressResponse;
 import com.rkostiuk.cstask.dto.mapper.UserMapper;
+import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.service.UserService;
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping
-    public Page<UserAddressResponse> search(@RequestBody UserSearchRequest searchRequest, Pageable pageable) {
+    public Page<UserResponse> search(@RequestBody UserSearchRequest searchRequest, Pageable pageable) {
         userSearchRequestValidator.validate(searchRequest);
         return userService.findUsersWithBirthDateBetween(searchRequest, pageable);
     }

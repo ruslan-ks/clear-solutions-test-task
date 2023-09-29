@@ -1,11 +1,9 @@
 package com.rkostiuk.cstask.test.util;
 
-import com.rkostiuk.cstask.dto.response.UserAddressResponse;
-import com.rkostiuk.cstask.entity.Address;
+import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.entity.User;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -19,21 +17,16 @@ public interface TestDataFactory {
     Stream<User> users(Supplier<User> userSupplier);
 
     /**
-     * Same as {@link TestDataFactory#userAddressResponses(Supplier, Function)}, but with size specified
+     * Same as {@link TestDataFactory#userResponses(Supplier)}, but with size specified
      * @param size number of objects to be created
      * @param userSupplier creates users
-     * @param addressMapper creates addresses for users
      * @return List of DTOs of specified size
      */
-    List<UserAddressResponse> userAddressResponses(int size,
-                                                   Supplier<User> userSupplier,
-                                                   Function<User, Address> addressMapper);
+    List<UserResponse> userResponses(int size, Supplier<User> userSupplier);
 
     /**
      * @param userSupplier creates users
-     * @param addressMapper creates addresses for users
-     * @return Unterminated Stream of UserWithAddressResponse objects
+     * @return Unterminated Stream of UserResponse objects
      */
-    Stream<UserAddressResponse> userAddressResponses(Supplier<User> userSupplier,
-                                                     Function<User, Address> addressMapper);
+    Stream<UserResponse> userResponses(Supplier<User> userSupplier);
 }

@@ -1,7 +1,7 @@
 package com.rkostiuk.cstask.service;
 
 import com.rkostiuk.cstask.dto.request.UserSearchRequest;
-import com.rkostiuk.cstask.dto.response.UserAddressResponse;
+import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    Page<UserAddressResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable);
+    Page<UserResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable);
 
     User findUserById(long id) throws UserNotFoundException;
 

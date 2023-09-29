@@ -1,7 +1,7 @@
 package com.rkostiuk.cstask.service;
 
 import com.rkostiuk.cstask.dto.request.UserSearchRequest;
-import com.rkostiuk.cstask.dto.response.UserAddressResponse;
+import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
@@ -23,8 +23,8 @@ public class DataJpaUserService implements UserService {
     }
 
     @Override
-    public Page<UserAddressResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable) {
-        return userRepository.findByBirthDateBetween(request.fromIncluding(), request.toExcluding(), pageable);
+    public Page<UserResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable) {
+        return userRepository.findUsersByBirthDateBetween(request.fromIncluding(), request.toExcluding(), pageable);
     }
 
     @Override

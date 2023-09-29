@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public record UserResponse(long id,
                            String firstName,
-                           String secondName,
+                           String lastName,
                            String email,
                            LocalDate birthDate,
                            String phone) {
