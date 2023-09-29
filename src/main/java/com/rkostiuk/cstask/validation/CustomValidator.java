@@ -16,9 +16,12 @@ public abstract class CustomValidator<T> implements Validator {
     }
 
     /**
+     * Should be overridden to provide specific exception class.
      * Used to create ValidationException if validation fails
      * @param errors validation errors
      * @return new ValidationException instance
      */
-    protected abstract CustomValidationException createValidationException(Errors errors);
+    protected CustomValidationException createValidationException(Errors errors) {
+        return new CustomValidationException(errors);
+    }
 }
