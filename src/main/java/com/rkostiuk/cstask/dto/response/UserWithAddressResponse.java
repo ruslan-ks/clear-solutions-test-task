@@ -3,8 +3,8 @@ package com.rkostiuk.cstask.dto.response;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 
-public record UserAddressResponse(UserResponse user, AddressResponse address) {
-    public UserAddressResponse(User user, Address address) {
+public record UserWithAddressResponse(UserResponse user, AddressResponse address) {
+    public UserWithAddressResponse(User user, Address address) {
         this(new UserResponse(user), createResponseIfNotNull(address));
     }
 

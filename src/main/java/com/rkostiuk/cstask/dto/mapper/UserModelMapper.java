@@ -1,7 +1,7 @@
 package com.rkostiuk.cstask.dto.mapper;
 
 import com.rkostiuk.cstask.dto.request.NewUserRequest;
-import com.rkostiuk.cstask.dto.response.UserAddressResponse;
+import com.rkostiuk.cstask.dto.response.UserWithAddressResponse;
 import com.rkostiuk.cstask.entity.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class UserModelMapper implements UserMapper {
     }
 
     @Override
-    public UserAddressResponse toUserAddressResponse(User user) {
-        return new UserAddressResponse(user, user.getAddress());
+    public UserWithAddressResponse toUserAddressResponse(User user) {
+        return new UserWithAddressResponse(user, user.getAddress());
     }
 }

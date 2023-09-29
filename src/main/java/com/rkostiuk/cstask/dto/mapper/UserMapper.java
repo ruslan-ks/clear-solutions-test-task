@@ -1,7 +1,7 @@
 package com.rkostiuk.cstask.dto.mapper;
 
 import com.rkostiuk.cstask.dto.request.NewUserRequest;
-import com.rkostiuk.cstask.dto.response.UserAddressResponse;
+import com.rkostiuk.cstask.dto.response.UserWithAddressResponse;
 import com.rkostiuk.cstask.entity.User;
 
 public interface UserMapper {
@@ -12,5 +12,5 @@ public interface UserMapper {
      */
     User toUser(NewUserRequest newUserRequest);
 
-    UserAddressResponse toUserAddressResponse(User user);
+    UserWithAddressResponse toUserAddressResponse(User user);
 }

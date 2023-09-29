@@ -4,7 +4,7 @@ import com.rkostiuk.cstask.dto.mapper.AddressMapper;
 import com.rkostiuk.cstask.dto.request.NewAddressRequest;
 import com.rkostiuk.cstask.dto.request.NewUserRequest;
 import com.rkostiuk.cstask.dto.request.UserSearchRequest;
-import com.rkostiuk.cstask.dto.response.UserAddressResponse;
+import com.rkostiuk.cstask.dto.response.UserWithAddressResponse;
 import com.rkostiuk.cstask.dto.mapper.UserMapper;
 import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.entity.Address;
@@ -47,7 +47,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UserAddressResponse create(@Valid @RequestBody NewUserRequest newUserRequest) {
+    public UserWithAddressResponse create(@Valid @RequestBody NewUserRequest newUserRequest) {
         userValidator.validate(newUserRequest);
         User user = userMapper.toUser(newUserRequest);
         user = userService.addUser(user);
