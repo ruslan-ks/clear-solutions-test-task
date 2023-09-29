@@ -1,6 +1,7 @@
 package com.rkostiuk.cstask.dto.mapper;
 
 import com.rkostiuk.cstask.dto.request.NewUserRequest;
+import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.dto.response.UserWithAddressResponse;
 import com.rkostiuk.cstask.entity.User;
 import org.modelmapper.ModelMapper;
@@ -20,7 +21,12 @@ public class UserModelMapper implements UserMapper {
     }
 
     @Override
-    public UserWithAddressResponse toUserAddressResponse(User user) {
+    public UserWithAddressResponse toUserWithAddressResponse(User user) {
         return new UserWithAddressResponse(user, user.getAddress());
+    }
+
+    @Override
+    public UserResponse toUserResponse(User user) {
+        return new UserResponse(user);
     }
 }

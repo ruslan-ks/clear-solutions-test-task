@@ -4,6 +4,7 @@ import com.rkostiuk.cstask.dto.request.UserSearchRequest;
 import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
+import com.rkostiuk.cstask.exception.AddressNotFoundException;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,4 +28,6 @@ public interface UserService {
     void setAddress(long userId, Address address) throws UserNotFoundException;
 
     void deleteUserById(long userId) throws UserNotFoundException;
+
+    Address findAddressByUserId(long userId) throws UserNotFoundException, AddressNotFoundException;
 }

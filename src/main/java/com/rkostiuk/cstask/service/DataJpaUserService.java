@@ -4,6 +4,7 @@ import com.rkostiuk.cstask.dto.request.UserSearchRequest;
 import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
+import com.rkostiuk.cstask.exception.AddressNotFoundException;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
 import com.rkostiuk.cstask.repository.UserRepository;
 import org.springframework.data.domain.Page;
@@ -56,5 +57,15 @@ public class DataJpaUserService implements UserService {
     public void deleteUserById(long id) throws UserNotFoundException {
         User user = findUserById(id);
         userRepository.delete(user);
+    }
+
+    @Override
+    public Address findAddressByUserId(long userId) throws UserNotFoundException, AddressNotFoundException {
+        User user = findUserById(userId);
+        Address address = user.getAddress();
+        if (address == null) {
+            throw new AddressNotFoundException("Address for user with id " + userId + " not found");
+        }
+        return address;
     }
 }
