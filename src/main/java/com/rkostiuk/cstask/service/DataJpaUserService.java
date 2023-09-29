@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Transactional(readOnly = true)
 @Service
 public class DataJpaUserService implements UserService {
@@ -27,8 +29,13 @@ public class DataJpaUserService implements UserService {
 
     @Override
     public User findUserById(long id) throws UserNotFoundException {
-        return userRepository.findById(id).orElseThrow(
-                () -> new UserNotFoundException("User with id " + id + " not found"));
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) throws UserNotFoundException {
+        return userRepository.findUserByEmail(email);
     }
 
     @Transactional

@@ -14,6 +14,7 @@ public class User implements ValidUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String email;
 
     @Column(name = "first_name")
@@ -25,6 +26,7 @@ public class User implements ValidUser {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Column(unique = true)
     private String phone;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -8,8 +8,8 @@ import java.util.Map;
 
 public record ApiErrorResponse(int httpStatus, Instant timestamp, Map<String, Object> details) {
 
-    public static ApiErrorResponse validationError(List<FieldValidationError> fieldValidationErrors) {
-        return badRequest(Map.of("validationErrors", fieldValidationErrors));
+    public static ApiErrorResponse validationFail(List<ApiValidationError> apiValidationErrors) {
+        return badRequest(Map.of("validationErrors", apiValidationErrors));
     }
 
     public static ApiErrorResponse badRequest(Map<String, Object> details) {

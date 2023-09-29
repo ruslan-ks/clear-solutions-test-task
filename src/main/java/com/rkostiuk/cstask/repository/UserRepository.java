@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -19,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             right join a.user u
     """)
     Page<UserAddressResponse> findByBirthDateBetween(LocalDate from, LocalDate to, Pageable pageable);
+
+    Optional<User> findUserByEmail(String email);
 }

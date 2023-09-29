@@ -9,6 +9,7 @@ import com.rkostiuk.cstask.dto.mapper.UserMapper;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.service.UserService;
+import com.rkostiuk.cstask.validation.UserValidator;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +22,16 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final AddressMapper addressMapper;
+    private final UserValidator userValidator;
 
-    public UserController(UserService userService, UserMapper userMapper, AddressMapper addressMapper) {
+    public UserController(UserService userService,
+                          UserMapper userMapper,
+                          AddressMapper addressMapper,
+                          UserValidator userValidator) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.addressMapper = addressMapper;
+        this.userValidator = userValidator;
     }
 
     @GetMapping
@@ -36,6 +42,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public UserAddressResponse create(@Valid @RequestBody NewUserRequest newUserRequest) {
+        userValidator.validate(newUserRequest);
         User user = userMapper.toUser(newUserRequest);
         user = userService.addUser(user);
         return userMapper.toUserAddressResponse(user);
