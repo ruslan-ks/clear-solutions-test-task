@@ -1,7 +1,7 @@
 package com.rkostiuk.cstask.service;
 
-import com.rkostiuk.cstask.dto.UserSearchRequest;
-import com.rkostiuk.cstask.dto.UserAddressResponse;
+import com.rkostiuk.cstask.dto.request.UserSearchRequest;
+import com.rkostiuk.cstask.dto.response.UserAddressResponse;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.repository.UserRepository;

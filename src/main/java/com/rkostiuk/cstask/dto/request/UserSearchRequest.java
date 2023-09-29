@@ -1,4 +1,4 @@
-package com.rkostiuk.cstask.dto;
+package com.rkostiuk.cstask.dto.request;
 
 import java.time.LocalDate;
 

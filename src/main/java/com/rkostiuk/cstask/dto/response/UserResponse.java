@@ -1,4 +1,4 @@
-package com.rkostiuk.cstask.dto;
+package com.rkostiuk.cstask.dto.response;
 
 import com.rkostiuk.cstask.entity.User;
 

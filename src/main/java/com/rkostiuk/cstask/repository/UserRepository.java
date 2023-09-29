@@ -1,6 +1,6 @@
 package com.rkostiuk.cstask.repository;
 
-import com.rkostiuk.cstask.dto.UserAddressResponse;
+import com.rkostiuk.cstask.dto.response.UserAddressResponse;
 import com.rkostiuk.cstask.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("""
-            select new com.rkostiuk.cstask.dto.UserAddressResponse(u, a)
+            select new com.rkostiuk.cstask.dto.response.UserAddressResponse(u, a)
             from Address a
             right join a.user u
     """)

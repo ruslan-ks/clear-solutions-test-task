@@ -1,6 +1,6 @@
 package com.rkostiuk.cstask.test.util;
 
-import com.rkostiuk.cstask.dto.UserAddressResponse;
+import com.rkostiuk.cstask.dto.response.UserAddressResponse;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 
