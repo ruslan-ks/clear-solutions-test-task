@@ -2,6 +2,7 @@ package com.rkostiuk.cstask.service;
 
 import com.rkostiuk.cstask.dto.request.UserSearchRequest;
 import com.rkostiuk.cstask.dto.response.UserAddressResponse;
+import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
 import com.rkostiuk.cstask.repository.UserRepository;
@@ -34,6 +35,13 @@ public class DataJpaUserService implements UserService {
     @Override
     public User addUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Transactional
+    @Override
+    public void setAddress(long userId, Address address) throws UserNotFoundException {
+        User user = findUserById(userId);
+        user.setAddress(address);
     }
 
     @Transactional
