@@ -9,6 +9,7 @@ import com.rkostiuk.cstask.dto.mapper.UserMapper;
 import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.service.UserService;
+import com.rkostiuk.cstask.validation.UserSearchRequestValidator;
 import com.rkostiuk.cstask.validation.UserValidator;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -23,19 +24,23 @@ public class UserController {
     private final UserMapper userMapper;
     private final AddressMapper addressMapper;
     private final UserValidator userValidator;
+    private final UserSearchRequestValidator userSearchRequestValidator;
 
     public UserController(UserService userService,
                           UserMapper userMapper,
                           AddressMapper addressMapper,
-                          UserValidator userValidator) {
+                          UserValidator userValidator,
+                          UserSearchRequestValidator userSearchRequestValidator) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.addressMapper = addressMapper;
         this.userValidator = userValidator;
+        this.userSearchRequestValidator = userSearchRequestValidator;
     }
 
     @GetMapping
     public Page<UserAddressResponse> search(@RequestBody UserSearchRequest searchRequest, Pageable pageable) {
+        userSearchRequestValidator.validate(searchRequest);
         return userService.findUsersWithBirthDateBetween(searchRequest, pageable);
     }
 
