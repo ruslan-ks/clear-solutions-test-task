@@ -1,6 +1,7 @@
 package com.rkostiuk.cstask.dto.request;
 
 import com.rkostiuk.cstask.validation.ValidUser;
+import jakarta.validation.Valid;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -11,6 +12,8 @@ public class NewUserRequest implements ValidUser {
     private String lastName;
     private LocalDate birthDate;
     private String phone;
+
+    @Valid
     private NewAddressRequest address;
 
     @Override
