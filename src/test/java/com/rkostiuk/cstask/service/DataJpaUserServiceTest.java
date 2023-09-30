@@ -10,7 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,16 +32,17 @@ class DataJpaUserServiceTest {
 
     @Test
     void findUsersWithBirthDateBetween() {
-        PageData<UserResponse> pageData = TestUtils.createPageData(createUserResponses(10));
+        List<UserResponse> expectedResponses = createUserResponses(10);
         var req = new UserSearchRequest(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1));
 
-        when(userRepository.findUsersByBirthDateBetween(req.fromIncluding(), req.toExcluding(), pageData.pageable()))
-                .thenReturn(pageData.page());
+        Pageable pageable = PageRequest.of(0, expectedResponses.size());
+        when(userRepository.findUsersByBirthDateBetween(req.fromIncluding(), req.toExcluding(), pageable))
+                .thenReturn(expectedResponses);
 
-        Page<UserResponse> actualPage = userService.findUsersWithBirthDateBetween(req, pageData.pageable());
+        List<UserResponse> actualResponses = userService.findUsersWithBirthDateBetween(req, pageable);
 
-        assertThat(actualPage).isEqualTo(pageData.page());
-        verify(userRepository).findUsersByBirthDateBetween(req.fromIncluding(), req.toExcluding(), pageData.pageable());
+        assertThat(actualResponses).isEqualTo(expectedResponses);
+        verify(userRepository).findUsersByBirthDateBetween(req.fromIncluding(), req.toExcluding(), pageable);
     }
 
     private List<UserResponse> createUserResponses(int size) {

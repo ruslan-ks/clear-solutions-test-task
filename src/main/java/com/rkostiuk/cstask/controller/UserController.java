@@ -3,7 +3,6 @@ package com.rkostiuk.cstask.controller;
 import com.rkostiuk.cstask.dto.request.NewUserRequest;
 import com.rkostiuk.cstask.dto.request.PatchUserRequest;
 import com.rkostiuk.cstask.dto.request.UserSearchRequest;
-import com.rkostiuk.cstask.dto.response.UserWithAddressResponse;
 import com.rkostiuk.cstask.dto.mapper.UserMapper;
 import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.entity.User;
@@ -12,10 +11,11 @@ import com.rkostiuk.cstask.validation.UserPatchValidator;
 import com.rkostiuk.cstask.validation.UserSearchRequestValidator;
 import com.rkostiuk.cstask.validation.UserValidator;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/users")
 @RestController
@@ -39,18 +39,18 @@ public class UserController {
     }
 
     @GetMapping
-    public Page<UserResponse> search(@RequestBody UserSearchRequest searchRequest, Pageable pageable) {
+    public List<UserResponse> findPage(@RequestBody UserSearchRequest searchRequest, Pageable pageable) {
         userSearchRequestValidator.validate(searchRequest);
         return userService.findUsersWithBirthDateBetween(searchRequest, pageable);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UserWithAddressResponse create(@Valid @RequestBody NewUserRequest newUserRequest) {
+    public UserResponse create(@Valid @RequestBody NewUserRequest newUserRequest) {
         userValidator.validate(newUserRequest);
         User user = userMapper.toUser(newUserRequest);
         user = userService.addUser(user);
-        return userMapper.toUserWithAddressResponse(user);
+        return userMapper.toUserResponse(user);
     }
 
     @GetMapping("/{userId}")

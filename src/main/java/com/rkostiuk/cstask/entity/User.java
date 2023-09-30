@@ -29,9 +29,6 @@ public class User implements ValidUser {
     @Column(unique = true)
     private String phone;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Address address;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -57,7 +54,6 @@ public class User implements ValidUser {
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
                 ", phone='" + phone + '\'' +
-                ", address=" + address +
                 '}';
     }
 
@@ -111,14 +107,5 @@ public class User implements ValidUser {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-        address.setUser(this);
     }
 }

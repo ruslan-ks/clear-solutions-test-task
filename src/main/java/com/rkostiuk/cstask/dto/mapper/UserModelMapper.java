@@ -3,7 +3,6 @@ package com.rkostiuk.cstask.dto.mapper;
 import com.rkostiuk.cstask.dto.request.NewUserRequest;
 import com.rkostiuk.cstask.dto.request.PatchUserRequest;
 import com.rkostiuk.cstask.dto.response.UserResponse;
-import com.rkostiuk.cstask.dto.response.UserWithAddressResponse;
 import com.rkostiuk.cstask.entity.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -24,11 +23,6 @@ public class UserModelMapper implements UserMapper {
     @Override
     public User toUser(PatchUserRequest patchUserRequest) {
         return modelMapper.map(patchUserRequest, User.class);
-    }
-
-    @Override
-    public UserWithAddressResponse toUserWithAddressResponse(User user) {
-        return new UserWithAddressResponse(user, user.getAddress());
     }
 
     @Override

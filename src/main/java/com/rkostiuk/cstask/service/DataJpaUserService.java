@@ -6,28 +6,33 @@ import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.exception.AddressNotFoundException;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
+import com.rkostiuk.cstask.repository.AddressRepository;
 import com.rkostiuk.cstask.repository.UserRepository;
 import com.rkostiuk.cstask.util.BeanHelper;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
 @Service
 public class DataJpaUserService implements UserService {
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
     private final BeanHelper beanHelper;
 
-    public DataJpaUserService(UserRepository userRepository, BeanHelper beanHelper) {
+    public DataJpaUserService(UserRepository userRepository,
+                              AddressRepository addressRepository,
+                              BeanHelper beanHelper) {
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
         this.beanHelper = beanHelper;
     }
 
     @Override
-    public Page<UserResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable) {
+    public List<UserResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable) {
         return userRepository.findUsersByBirthDateBetween(request.fromIncluding(), request.toExcluding(), pageable);
     }
 
@@ -52,7 +57,8 @@ public class DataJpaUserService implements UserService {
     @Override
     public void setAddress(long userId, Address address) throws UserNotFoundException {
         User user = findUserById(userId);
-        user.setAddress(address);
+        address.setId(user.getId());
+        addressRepository.save(address);
     }
 
     @Transactional
@@ -72,10 +78,7 @@ public class DataJpaUserService implements UserService {
     @Override
     public Address findAddressByUserId(long userId) throws UserNotFoundException, AddressNotFoundException {
         User user = findUserById(userId);
-        Address address = user.getAddress();
-        if (address == null) {
-            throw new AddressNotFoundException("Address for user with id " + userId + " not found");
-        }
-        return address;
+        return addressRepository.findById(user.getId())
+                .orElseThrow(() -> new AddressNotFoundException("Address for user with id " + userId + " not found"));
     }
 }

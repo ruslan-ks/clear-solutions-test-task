@@ -6,14 +6,14 @@ import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.exception.AddressNotFoundException;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
 
-    Page<UserResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable);
+    List<UserResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable);
 
     User findUserById(long id) throws UserNotFoundException;
 
