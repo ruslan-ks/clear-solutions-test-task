@@ -17,7 +17,7 @@ public interface UserService {
 
     User findUserById(long id) throws UserNotFoundException;
 
-    Optional<User> findUserByEmail(String email) throws UserNotFoundException;
+    Optional<User> findUserByEmail(String email);
 
     /**
      * Saves new user
@@ -26,6 +26,13 @@ public interface UserService {
     User addUser(User user);
 
     void setAddress(long userId, Address address) throws UserNotFoundException;
+
+    /**
+     * Set all non-null values of provided User object to existing one
+     * @param userId user to be updated id
+     * @param user contains user data
+     */
+    void patchUser(long userId, User user) throws UserNotFoundException;
 
     void deleteUserById(long userId) throws UserNotFoundException;
 

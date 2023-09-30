@@ -1,6 +1,7 @@
 package com.rkostiuk.cstask.dto.mapper;
 
 import com.rkostiuk.cstask.dto.request.NewUserRequest;
+import com.rkostiuk.cstask.dto.request.PatchUserRequest;
 import com.rkostiuk.cstask.dto.response.UserResponse;
 import com.rkostiuk.cstask.dto.response.UserWithAddressResponse;
 import com.rkostiuk.cstask.entity.User;
@@ -18,6 +19,11 @@ public class UserModelMapper implements UserMapper {
     @Override
     public User toUser(NewUserRequest newUserRequest) {
         return modelMapper.map(newUserRequest, User.class);
+    }
+
+    @Override
+    public User toUser(PatchUserRequest patchUserRequest) {
+        return modelMapper.map(patchUserRequest, User.class);
     }
 
     @Override

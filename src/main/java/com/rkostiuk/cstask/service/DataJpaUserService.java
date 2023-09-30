@@ -7,6 +7,7 @@ import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.exception.AddressNotFoundException;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
 import com.rkostiuk.cstask.repository.UserRepository;
+import com.rkostiuk.cstask.util.BeanHelper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,11 @@ import java.util.Optional;
 @Service
 public class DataJpaUserService implements UserService {
     private final UserRepository userRepository;
+    private final BeanHelper beanHelper;
 
-    public DataJpaUserService(UserRepository userRepository) {
+    public DataJpaUserService(UserRepository userRepository, BeanHelper beanHelper) {
         this.userRepository = userRepository;
+        this.beanHelper = beanHelper;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class DataJpaUserService implements UserService {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) throws UserNotFoundException {
+    public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
@@ -50,6 +53,13 @@ public class DataJpaUserService implements UserService {
     public void setAddress(long userId, Address address) throws UserNotFoundException {
         User user = findUserById(userId);
         user.setAddress(address);
+    }
+
+    @Transactional
+    @Override
+    public void patchUser(long userId, User user) throws UserNotFoundException {
+        User existingUser = findUserById(userId);
+        beanHelper.copyNonNullProperties(existingUser, user);
     }
 
     @Transactional

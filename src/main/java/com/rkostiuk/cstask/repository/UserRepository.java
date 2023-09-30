@@ -12,13 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
-//    @Query("""
-//            select new com.rkostiuk.cstask.dto.response.UserAddressResponse(u, a)
-//            from Address a
-//            right join a.user u
-//    """)
     Page<UserResponse> findUsersByBirthDateBetween(LocalDate from, LocalDate to, Pageable pageable);
-
     Optional<User> findUserByEmail(String email);
 }
