@@ -17,6 +17,6 @@ public abstract class UserSupplierDecorator implements Supplier<User> {
     public User get() {
         User user = userSupplier.get();
         decorateCreated(user);
-        return null;
+        return user;
     }
 }

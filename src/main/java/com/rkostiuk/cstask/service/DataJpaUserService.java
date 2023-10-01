@@ -40,7 +40,7 @@ public class DataJpaUserService implements UserService {
 
     @Override
     public List<UserResponse> findUsersWithBirthDateBetween(UserSearchRequest request, Pageable pageable) {
-        return userRepository.findUsersByBirthDateBetween(request.fromIncluding(), request.toExcluding(), pageable);
+        return userRepository.findUsersByBirthDateBetween(request.from(), request.to(), pageable);
     }
 
     @Override

@@ -36,13 +36,13 @@ class DataJpaUserServiceTest {
         var req = new UserSearchRequest(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1));
 
         Pageable pageable = PageRequest.of(0, expectedResponses.size());
-        when(userRepository.findUsersByBirthDateBetween(req.fromIncluding(), req.toExcluding(), pageable))
+        when(userRepository.findUsersByBirthDateBetween(req.from(), req.to(), pageable))
                 .thenReturn(expectedResponses);
 
         List<UserResponse> actualResponses = userService.findUsersWithBirthDateBetween(req, pageable);
 
         assertThat(actualResponses).isEqualTo(expectedResponses);
-        verify(userRepository).findUsersByBirthDateBetween(req.fromIncluding(), req.toExcluding(), pageable);
+        verify(userRepository).findUsersByBirthDateBetween(req.from(), req.to(), pageable);
     }
 
     private List<UserResponse> createUserResponses(int size) {

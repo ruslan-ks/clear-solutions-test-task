@@ -14,9 +14,9 @@ public class UserSearchRequestValidator extends CustomValidator<UserSearchReques
     @Override
     public void validate(Object target, Errors errors) {
         var request = (UserSearchRequest) target;
-        if (!request.fromIncluding().isBefore(request.toExcluding())) {
-            errors.rejectValue("toExcluding", "FromToPeriod.toExcluding",
-                    "'toExcluding' has to be after 'fromIncluding'");
+        if (!request.from().isBefore(request.to())) {
+            errors.rejectValue("to", "FromToPeriod.to",
+                    "'to' has to be after 'from'");
         }
     }
 }

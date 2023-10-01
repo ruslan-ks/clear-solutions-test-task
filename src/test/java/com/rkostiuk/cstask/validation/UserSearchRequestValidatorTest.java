@@ -31,8 +31,8 @@ class UserSearchRequestValidatorTest {
 
     @Test
     void validDataPassesValidation() {
-        when(searchRequest.fromIncluding()).thenReturn(LocalDate.of(2000, 12, 31));
-        when(searchRequest.toExcluding()).thenReturn(LocalDate.of(2001, 1, 1));
+        when(searchRequest.from()).thenReturn(LocalDate.of(2000, 12, 31));
+        when(searchRequest.to()).thenReturn(LocalDate.of(2001, 1, 1));
 
         Errors errors = new BeanPropertyBindingResult(searchRequest, UserSearchRequest.class.getSimpleName());
         validator.validate(searchRequest, errors);
@@ -42,9 +42,9 @@ class UserSearchRequestValidatorTest {
 
     @Test
     void fromAfterToCausesValidationFail() {
-        LocalDate fromIncluding = LocalDate.of(2000, 1, 1);
-        LocalDate toExcluding = LocalDate.of(1999, 12, 31);
-        validationFails(fromIncluding, toExcluding);
+        LocalDate from = LocalDate.of(2000, 1, 1);
+        LocalDate to = LocalDate.of(1999, 12, 31);
+        validationFails(from, to);
     }
 
     @Test
@@ -53,12 +53,12 @@ class UserSearchRequestValidatorTest {
         validationFails(date, date);
     }
 
-    private void validationFails(LocalDate fromIncluding, LocalDate toExcluding) {
-        when(searchRequest.fromIncluding()).thenReturn(fromIncluding);
-        when(searchRequest.toExcluding()).thenReturn(toExcluding);
+    private void validationFails(LocalDate from, LocalDate to) {
+        when(searchRequest.from()).thenReturn(from);
+        when(searchRequest.to()).thenReturn(to);
 
         validator.validate(searchRequest, errors);
 
-        verify(errors).rejectValue(eq("toExcluding"), anyString(), anyString());
+        verify(errors).rejectValue(eq("to"), anyString(), anyString());
     }
 }
