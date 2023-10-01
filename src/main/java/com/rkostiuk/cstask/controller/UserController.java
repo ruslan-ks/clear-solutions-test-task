@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponse> findPage(@RequestBody UserSearchRequest searchRequest, Pageable pageable) {
+    public List<UserResponse> findPage(@Valid @RequestBody UserSearchRequest searchRequest, Pageable pageable) {
         userSearchRequestValidator.validate(searchRequest);
         return userService.findUsersWithBirthDateBetween(searchRequest, pageable);
     }

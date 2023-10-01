@@ -1,6 +1,8 @@
 package com.rkostiuk.cstask.dto.request;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
-public record UserSearchRequest(LocalDate from, LocalDate to) {
+public record UserSearchRequest(@NotNull LocalDate from, @NotNull LocalDate to) {
 }

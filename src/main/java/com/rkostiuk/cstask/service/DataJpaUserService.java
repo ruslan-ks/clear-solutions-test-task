@@ -64,6 +64,7 @@ public class DataJpaUserService implements UserService {
     @Override
     public void setAddress(long userId, Address address) throws UserNotFoundException {
         User user = findUserById(userId);
+        addressRepository.deleteById(userId);
         address.setUser(user);
         addressRepository.save(address);
     }
@@ -87,6 +88,7 @@ public class DataJpaUserService implements UserService {
     @Override
     public void deleteUserById(long id) throws UserNotFoundException {
         User user = findUserById(id);
+        addressRepository.deleteById(id);
         userRepository.delete(user);
     }
 
