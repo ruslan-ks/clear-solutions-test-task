@@ -6,6 +6,7 @@ import com.rkostiuk.cstask.entity.Address;
 import com.rkostiuk.cstask.entity.User;
 import com.rkostiuk.cstask.exception.AddressNotFoundException;
 import com.rkostiuk.cstask.exception.UserNotFoundException;
+import com.rkostiuk.cstask.exception.UserPatchValidationException;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public interface UserService {
      * @param userId user to be updated id
      * @param user contains user data
      */
-    void patchUser(long userId, User user) throws UserNotFoundException;
+    void patchUser(long userId, User user) throws UserNotFoundException, UserPatchValidationException;
 
     void deleteUserById(long userId) throws UserNotFoundException;
 

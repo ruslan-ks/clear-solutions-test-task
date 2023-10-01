@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public void patch(@PathVariable long userId, @RequestBody PatchUserRequest patchRequest) {
+    public void patch(@PathVariable long userId, @Valid @RequestBody PatchUserRequest patchRequest) {
         User user = userMapper.toUser(patchRequest);
         user.setId(userId);
         userPatchValidator.validate(user);
